@@ -1,0 +1,68 @@
+/* styel for clock */
+
+element.style {}
+
+.main-header .navbar-nav .nav-item {
+    margin: 0;
+}
+
+.clock {
+    color: #ffffff;
+    position: absolute;
+    font-size: 24px;
+    border-radius: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: fantasy;
+}
+
+.content-wrapper {
+    background-color: #07575B !important;
+    color: #ffffff;
+}
+
+.navbar-white {
+    background-color: #003b46 !important;
+}
+.navbar-light .navbar-nav .nav-link {
+    color: #ffffff;
+}
+[class*=sidebar-dark-] {
+    background-color: #00292e !important; 
+}
+.custom-btn-sbms-add {
+        color: #fff;
+        background-color: #00292e;
+        border-color: #28a745;
+        box-shadow: none;
+}
+.custom-btn-sbms-remove {
+    color: #ffffff;
+    background-color: #003b46;
+    border-color: #dc3545;
+    box-shadow: none;
+}
+.custom-btn-sbms-submit{
+    color: #fff;
+    background-color: #07575b;
+    border-color: #28a745;
+    box-shadow: none;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.table-header-fixt-top{
+    position: sticky;
+    z-index: 1;
+    top: -2px;
+    background: #FFF;
+}
+
+.dropdown-menu .show{
+  width: 100% !important;
+}
+
+ 
+.controlsidebar{
+display: none;
+}
+

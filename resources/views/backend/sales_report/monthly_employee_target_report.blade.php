@@ -1,0 +1,384 @@
+ @extends('layouts.sales_dashboard')
+<style>
+/*.tableFixHead {
+        overflow: auto;
+        height: 600px;
+  overflow-x: scroll;
+  overflow-y: scroll;
+    }
+
+    
+  .wrapper{
+	
+    z-index: 1;
+  }
+  
+ table td:first-child {
+  position: sticky;
+  left: 0;
+  background-color: #f5f5f5;
+}
+  
+  table{
+  overflow-y: scroll;
+  }
+  
+  tableFixHead thead th {
+        position: sticky;
+        top: 200px;
+        z-index: 1;
+    } */
+  
+  /* ==============new scc start ============= */
+  
+ 
+
+table {
+
+  font-size: 11px!important;
+  white-space: nowrap;
+  margin: 0;
+  border: none;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  border: 1px solid black;
+  overflow-y: scroll;
+}
+table td,
+table th {
+  border: 1px solid black;
+  padding: 0.5rem 1rem;
+  
+}
+  .content-wrapper{
+    z-index: 1;
+  margin-top:-43%!important;
+  }
+table thead th {
+  padding: 8px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  width: 45vw;
+  background: #FA621C;
+  color:#000;
+}
+   
+table td {
+  padding-bottom: 7px;
+  text-align: center;
+  
+}
+
+table tbody td:first-child {
+  font-weight: 100;
+  text-align: left;
+  position: relative;
+}
+table thead th:first-child {
+  position: sticky!important;
+  left: 0;
+  z-index: 1;
+}
+table tbody td:first-child {
+  position: sticky;
+  left: 0;
+  background: #f5f5f5;
+  z-index: 1;
+}
+caption {
+  text-align: left;
+  padding: 0.25rem;
+  position: sticky;
+  left: 0;
+}
+
+[role="region"][aria-labelledby][tabindex] {
+  width: 100%;
+  max-height: 600px;
+  overflow: auto;
+}
+[role="region"][aria-labelledby][tabindex]:focus {
+  //box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
+  outline: 0;
+}
+  footer.main-footer{
+  display: none!important;
+    z-index: -1;
+  }
+  .hover_manu_content{
+	    position: absolute;
+    width: 100%;
+    float: left;
+    top: -390px;
+    opacity: 0;
+  background: #fff;
+   margin-left: -15px;
+}
+  /* ========new css end====== */
+  /*
+  
+  table {
+  white-space: nowrap;
+  margin: 0;
+  border: none;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  border: 1px solid black;
+}
+table td,
+table th {
+  border: 1px solid black;
+  padding: 0.5rem 1rem;
+}
+table thead th {
+  padding: 3px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  width: 25vw;
+  background: #009;
+}
+table td {
+  background: #fff;
+  padding: 4px 5px;
+  text-align: center;
+}
+
+table tbody th {
+  font-weight: 100;
+  font-style: italic;
+  text-align: left;
+  position: relative;
+}
+table thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+}
+table tbody th {
+  position: sticky;
+  left: 0;
+  background: green;
+  z-index: 1;
+}
+caption {
+  text-align: left;
+  padding: 0.25rem;
+  position: sticky;
+  left: 0;
+}
+
+[role="region"][aria-labelledby][tabindex] {
+  width: 100%;
+  max-height: 98vh;
+  overflow: auto;
+}
+[role="region"][aria-labelledby][tabindex]:focus {
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
+  outline: 0;
+} */
+  
+</style>
+@section('print_menu')
+
+			<li class="nav-item">
+
+                </li>
+			<li class="nav-item ml-1">
+
+                </li>
+<li class="nav-item ml-1">
+
+                </li>
+
+@endsection
+
+@section('content')
+ 
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+
+        <!-- Main content -->
+        <div class="content px-4 ">
+          <div class="row pt-3">
+               <div class="col-md-12 text-right">
+                      <button class="btn btn-sm  btn-success mt-1" id="btnExport"  >
+                       Export
+                    </button>
+                 	<button class="btn btn-sm  btn-warning mt-1"  onclick="printDiv('contentbody')"  id="printbtn"  >
+                       Print
+                    </button>
+                 	<!--<button class="btn btn-sm  btn-warning mt-1"  onclick="printland()"  id="printland"  >-->
+                  <!--     PrintLands.-->
+                  <!--  </button>-->
+
+               </div>
+           </div>
+
+            <div class="container-fluid tableFixHead"  style="background:#ffffff; padding:0px 40px;min-height:85vh" id="contentbody">
+              <div class="row pt-2">
+                  	<div class="col-md-5 text-left">
+                      <h5 class="text-uppercase font-weight-bold">Monthly Mr Sales Product Wise Report <br> {{$month_name}} {{$year}}</h5>
+
+                    </div>
+                  	<div class="col-md-4 pt-3 text-center">
+                      	<h3 class="text-uppercase font-weight-bold">Naba Crop Care</h3>
+                  <p>Head office, Rajshahi, Bangladesh</p>
+                    </div>
+                </div>
+							
+              <div role="region" aria-labelledby="caption" tabindex="0" style="min-height:600px;">
+                <table id="reporttable">
+                  <caption id="caption"></caption>
+                  <thead>
+                    <tr>
+                      <th class="w-70">Employee/Area </th>
+                      @foreach($product_categorys as $key=>$p_c)
+									@php 
+                              			$productQty = DB::table('sales_products')->where('category_id',$p_c->category_id)->count('id');
+                              		@endphp 
+                              <th colspan="{{$productQty}}" style="color: rgb(20, 88, 20); font-weight: bold;text-align: center">{{$p_c->category_name}}</th>
+
+
+                               @endforeach
+                              @foreach($product_categorys as $key=>$p_c)
+                              <th style="color: rgb(20, 88, 20); font-weight: bold;text-align: center">{{$p_c->category_name}}</th>
+							 @endforeach
+                              <th>Total(Kg)</th>
+                            </tr>
+                    <tr>
+                      <th></th>
+                             @foreach($product_categorys as $key=>$p_c)
+                                @php 
+                                $products = DB::table('sales_products')->where('category_id',$p_c->category_id)->orderby('product_name', 'asc')->get();
+                                @endphp 
+								@foreach($products as $key=>$val)
+                               <th>{{$val->product_name}}</th>
+								@endforeach 
+							@endforeach 
+                            @foreach($product_categorys as $key=>$p_c)
+                              <th></th>
+							 @endforeach
+                            <th></th>
+                    </tr>
+                  </thead>
+                   @php
+						$grand_total_kg = 0;
+                   @endphp
+                  <tbody>
+                    @foreach($zones as $key=>$zone)
+                               @php
+                              
+                           $values= DB::table('montly_sales_targets as t1')
+                               ->select('t1.subzone_id','t4.subzone_title')
+                              ->join('dealer_subzones as t4','t1.subzone_id','=','t4.id')
+                              ->whereBetween('date', [$fdate, $tdate])
+                              ->where('t1.area_id', $zone->area_id)
+                              ->orderby('subzone_title')
+                              ->get();
+                               $sareabysubzone = $values->unique('subzone_id')->all();
+                           @endphp
+                     @if(!$sareabysubzone)
+                                      @php
+                         $value= DB::table('montly_sales_targets as t1')
+                                 ->select('t1.area_id','t4.area_title')
+                                ->join('dealer_areas as t4','t1.area_id','=','t4.id')
+                                ->whereBetween('date', [$fdate, $tdate])
+                                ->where('t1.area_id', $zone->area_id)
+                                ->distinct('area_id')
+                                ->orderby('area_title')
+                                ->get();
+
+                         @endphp
+                          @foreach($value as $area)
+                    
+                      @php 
+                            			$subTotal = 0;
+                            		@endphp 
+                                    <tr>
+                                      <td>{{$area->area_title}}</td>
+                                      @foreach($product_categorys as $key=>$p_c)
+                                               
+                                     	@php 
+                                      		$products = DB::table('sales_products')->where('category_id',$p_c->category_id)->orderby('product_name', 'asc')->get();
+                                      		
+                                      
+                                      @endphp 
+                                       @foreach($products as $key=>$product)
+                                      			@php
+                                               
+                                                   $data = DB::table('montly_sales_targets as t1')->where('t1.product_id',$product->id)->where('t1.category_id',$p_c->category_id)
+                                                              ->where('t1.area_id',$area->area_id)->whereBetween('t1.date', [$fdate, $tdate])->groupBy('t1.product_id')->sum('t1.qty_kg');
+
+                                                        $grand_total_kg += $data?? 0;
+                                      					$subTotal += $data ?? 0;
+                                      					
+                                                    @endphp 
+                                      	@if(!empty($data))
+                                         <td  style="text-align: center;padding-top:7px;">{{number_format($data,2)}}  </td>
+                                        @else 
+                  						<td></td>
+                                        @endif 
+                  						 @endforeach
+                  						
+                                      @endforeach
+                                      @foreach($product_categorys as $key=>$p_c)
+                                      	@php 
+                                      		$subTotalCate = DB::table('montly_sales_targets as t1')->where('t1.category_id',$p_c->category_id)
+                                                              ->where('t1.area_id',$area->area_id)->whereBetween('t1.date', [$fdate, $tdate])->sum('t1.qty_kg');
+                                      	@endphp 
+                                      <th>{{number_format($subTotalCate,2)}}</th>
+                                     @endforeach
+                                      <th>{{number_format($subTotal,2)}}</th>
+                                    </tr>
+                      @endforeach
+                      @endif 
+                    @endforeach
+                    <tr style="color: black;font-size:16px; font-weight: 600;">
+                         <td > <b>Grand Total:</b></td>
+                         <td colspan="100%" style="text-align:left; padding-left:20px;"><b>{{$grand_total_kg}} (Kg)</b></td>                           
+                     </tr>
+                  </tbody>
+                </table>
+              </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+
+
+
+<script type="text/javascript">
+    function printDiv(divName) {
+             var printContents = document.getElementById(divName).innerHTML;
+             var originalContents = document.body.innerHTML;
+
+             document.body.innerHTML = printContents;
+
+             window.print();
+
+             document.body.innerHTML = originalContents;
+        }
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnExport").click(function () {
+            $("#reporttable").table2excel({
+                filename: "Monthly-Employee-Target-Report.xls"
+            });
+        });
+    });
+</script>
+@endsection

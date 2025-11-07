@@ -1,0 +1,470 @@
+@extends('layouts.purchase_deshboard')
+
+@section('content')
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper posclass">
+
+        <!-- Main content -->
+        <div class="content px-4 ">
+            <form action="{{route('production.stock.out.update')}}" method="post">
+                @csrf
+                <div class="container" style="background:#f5f5f5; padding:0px 40px;min-height:85vh">
+                   <div class="row">
+                      <div class="col-md-12 text-center pt-3">
+                          <h3 class="text-uppercase">production received and update</h3>
+                          <hr width="55%" style="background: #003c3f;">
+                      </div>
+                  </div>
+                    <div id="pField">
+                      <div class="row pt-4 fieldGroup">
+                        <input type="hidden" name="sout_number" value="{{$stock_out[0]->sout_number}}">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-form-label">Date : </label>
+                                <input type="date" value="{{$stock_out[0]->date}}" class="form-control" name="date" >
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-form-label" required>Referance/Narration : </label>
+                                <input type="text" class="form-control" name="referance"  value="{{$stock_out[0]->referance}}">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-form-label" required>F G In Quantity (Pcs): </label>
+                                <input type="text" class="form-control"  name="fg_qty" id="fg_qty" value="{{$stock_out[0]->fg_qty}}">
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-form-label">Store : </label>
+                                <select name="wirehouse_id"  class="form-control select2" required>
+                                    <option value="">== Select Store ==</option>
+                                    @foreach ($stores as $item)
+                                        <option value="{{ $item->id }}" @if($stock_out[0]->wirehouse_id ==  $item->id)selected @endif>{{ $item->factory_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-form-label">Finish Goods Name : </label>
+                                <select name="finish_goods_id" class="form-control select2" required>
+                                    <option value="">== Select Store ==</option>
+                                    @foreach ($finishedgoods as $item)
+                                        <option value="{{ $item->id }}" @if($stock_out[0]->finish_goods_id ==  $item->id)selected @endif>{{ $item->product_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-form-label" required>Bach No : </label>
+                                <input type="text" class="form-control" name="batch"  value="{{$stock_out[0]->batch}}">
+                            </div>
+                        </div>
+                      @php
+                      	$weight = DB::table('sales_products')->where('id',$stock_out[0]->finish_goods_id)->value('product_weight');
+                      	$total = $stock_out[0]->fg_qty*$weight;
+                      @endphp
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-form-label" required>F G In Quantity (Kg): </label>
+                                <input type="text" class="form-control"  name="fg_out_qty" id="fg_out_qty" value="{{$total}}">
+                              <input type="hidden" class="weight" name="weight" value="{{$weight}}">
+                            </div>
+                        </div>
+					</div>
+                    </div>
+                    <h5 class="mt-3 text-uppercase">Production Stock Out</h5>
+                    <hr class="bg-light mt-0 pt-0">
+                    {{-- Multiple add button code start from here! --}}
+                    <div class="row mt-3">
+                        <div id="field" class="col-md-12">
+                          <div class="row fieldGroup rowname mb-3">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-11">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label for="">Product Name:</label>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label for="">Quantity (Kg):</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="">Stock Balance (Kg):</label>
+                                                    </div>
+                                                  <div class="col-md-3">
+                                                        <label for="">Remaining Balance (Kg):</label>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                {{-- <label for="">Action :</label><br> --}}
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            @foreach ($stock_out as $data )
+                                <div class="row fieldGroup rowname mb-3">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-11">
+                                                <div class="row">
+                                                    {{-- <input type="hidden" name="id" value="{{$data->id}}"> --}}
+                                                    <div class="col-md-4">
+                                                        <select class="form-control select2 product_id" name="product_id[]"
+                                                            data-live-search-style="startsWith" required>
+                                                            <option value=" " selectedS>Select Product</option>
+                                                            @foreach ($products as $product)
+                                                                <option style="color:#000;font-weight:600;"
+                                                                    value="{{ $product->id }}" @if($data->product_id ==  $product->id)selected @endif>{{ $product->product_name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input type="text" class="form-control p_qty" name="p_qty[]" value="{{$data->stock_out_quantity}}"
+                                                            placeholder="Quantity">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control stock_value"  name="stock[]"
+                                                            placeholder="Stock">
+                                                    </div>
+                                                  <div class="col-md-3">
+                                                        <input type="text" class="form-control remaning"  name="remaning[]"
+                                                            placeholder="Remaining Balance">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <a href="javascript:void(0)" style="margin-top: 3px;"
+                                                    class="btn custom-btn-sbms-add btn-sm addMore"><i
+                                                        class="fas fa-plus-circle"></i></a>
+                                                <a href="javascript:void(0)" class="btn btn-sm custom-btn-sbms-remove remove"
+                                                    style="margin-top: 3px;"><i class="fas  fa-minus-circle"></i></a>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                    </div>
+                    {{-- multiple add end on here --}}
+                  <div class="row">
+                    	<h5 class="mt-3 text-uppercase col-md-12 text-danger">Reprocess Finish Good</h5>
+                      <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="refinish_goods_id" class="col-form-label text-danger">Finish Goods Name : </label>
+                                <select name="reprocess_finish_goods_id" class="form-control select2" id="refinish_goods_id" >
+                                    <option value="">== Select Item ==</option>
+                                    @foreach ($finishedgoods as $item)
+                                        <option value="{{ $item->id }}">{{ $item->product_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-form-label text-danger" >Quantity (Bag):  </label>
+                                <input type="number" class="form-control" name="reprocess_qty"  id="reprocess_qty" placeholder="2">
+                            </div>
+                        </div>
+              		</div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {{--  <div class="row">
+                          <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="process_loss" class="col-form-label" required>Process Loss (Kg): </label>
+                                <input type="text" class="form-control" name="process_loss" value="{{$stock_out[0]->process_loss}}">
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="wastage" class="col-form-label" required>Wastage (Kg): </label>
+                                <input type="text" class="form-control" name="wastage" value="{{$stock_out[0]->wastage}}">
+                            </div>
+                          </div>
+                           <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="reject_qty" class="col-form-label" required>Running qc reject at production (Kg): </label>
+                                <input type="text" class="form-control" name="reject_qty" value="{{$stock_out[0]->reject_qty ?? ''}}">
+                            </div>
+                          </div>
+                          <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="reject_qty" class="col-form-label" required>WIP (Kg): </label>
+                                <input type="text" class="form-control" name="wip_qty" value="">
+                            </div>
+                          </div>
+                          <div class="col-md-1"></div>
+                      </div> --}}
+                      </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                              <label for="inputEmail3" class="col-form-label" required>Note: </label>
+                              <input type="text" class="form-control" name="note" value="{{$stock_out[0]->note}}">
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-4 mt-4">
+                          <div class="form-group row">
+                              <label for="total_qty" class="col-form-label col-md-10 h5" >Total Quantity (Kg):  <span id="total_qty" class="ml-3"></span></label>
+                              <input type="hidden" class="form-control col-md-2 total_qty" name="total_qty" >
+                          </div>
+
+                        </div>
+                    </div>
+                    <div class="row pb-5">
+                        <div class="col-md-4 mt-3">
+
+                        </div>
+                        <div class="col-md-4 mt-3">
+                            <button type="submit" class="btn custom-btn-sbms-submit btn-primary" style="width: 100%"> Confirm Stock Out Checkout
+                            </button>
+                        </div>
+                        <div class="col-md-4 mt-3">
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+            </form>
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+@endsection
+
+
+@push('end_js')
+
+
+    <script>
+        $(document).ready(function() {
+
+            total();
+            stock();
+            var x = 1
+            //add more fields group
+
+            $("body").on("click", ".addMore", function() {
+                x = x + 1;
+                var fieldHTML =
+                    '<div class="row fieldGroup rowname mb-3"> <div class="col-md-12"> <div class="row"> <div class="col-md-11"> <div class="row"> <div class="col-md-4"> <select class="form-control select2 product_id" name="product_id[]" data-live-search-style="startsWith" required> <option value=" " selectedS>Select Product</option> @foreach ($products as $product) <option style="color:#000;font-weight:600;" value="{{ $product->id }}" >{{ $product->product_name }} </option> @endforeach </select> </div> <div class="col-md-2"> <input type="text" class="form-control p_qty" name="p_qty[]" value="" placeholder="Quantity"> </div> <div class="col-md-3"> <input type="text" class="form-control stock_value" name="stock[]" placeholder="Stock"> </div> <div class="col-md-3"> <input type="text" class="form-control remaning" name="remaning[]" placeholder="Remaining Balance"> </div> </div> </div> <div class="col-md-1"> <a href="javascript:void(0)" style="margin-top: 3px;" class="btn custom-btn-sbms-add btn-sm addMore"><i class="fas fa-plus-circle"></i></a> <a href="javascript:void(0)" class="btn btn-sm custom-btn-sbms-remove remove" style="margin-top: 3px;"><i class="fas fa-minus-circle"></i></a> </div> </div> </div> </div>';
+                $(this).parents('.fieldGroup:last').after(fieldHTML);
+
+
+                $('.select2').select2({
+                    theme: 'bootstrap4'
+                })
+
+            });
+
+
+            //remove fields group
+            $("body").on("click", ".remove", function() {
+                $(this).parents(".fieldGroup").remove();
+                total();
+                x = x - 1;
+                console.log(x);
+
+            });
+
+
+            $('#field').on('change', '.product_id', function() {
+
+                    // $('.totalvalueid').attr("value", "0");
+                    var parent = $(this).closest('.fieldGroup');
+
+                    var product_id = parent.find('.product_id').val();
+
+                    //console.log(product_id);
+                    $.ajax({
+                        url: '{{ url('/stock/product/') }}/' + product_id,
+                        type: "GET",
+                        dataType: 'json',
+                        success: function(data) {
+                          //  console.log(data);
+
+                            var pcost= parent.find('.p_qty').val();
+                            parent.find('.stock_value').val(data.stock);
+                            parent.find('.remaning').val(data.stock - pcost);
+
+
+                        }
+                    });
+                    total();
+
+                    })
+
+
+                    $('#field').on('input', '.p_qty', function() {
+
+                        // $('.totalvalueid').attr("value", "0");
+                        var parent = $(this).closest('.fieldGroup');
+
+                        var p_qty = parent.find('.p_qty').val();
+                      	var product_id = parent.find('.product_id').val();
+                      //	alert(product_id);
+ 						 $.ajax({
+                        url: '{{ url('/stock/product/') }}/' + product_id,
+                        type: "GET",
+                        dataType: 'json',
+                        success: function(data) {
+                          //  console.log(data);
+
+                            var pcost= parent.find('.p_qty').val();
+                            parent.find('.stock_value').val(data.stock);
+                            parent.find('.remaning').val(data.stock - pcost);
+
+
+                        }
+                    });
+                    total();
+
+                    });
+
+
+
+            //calculate total value
+            function total() {
+                var qty = 0;
+                var total = 0;
+                var discount = 0;
+                var total_with_discount = 0;
+
+                $(".p_qty").each(function() {
+                    var totalqtyid = $(this).val() - 0;
+                    qty += totalqtyid;
+                    $('#total_qty').html(qty);
+                    // console.log(total);
+                })
+                $('#total_qty').html(qty);
+                $('.total_qty').val(qty);
+
+            }
+
+            function stock() {
+
+                    $(".product_id").each(function() {
+                    var parent = $(this).closest('.fieldGroup');
+
+                        var product_id = parent.find('.product_id').val();
+						//alert('Ok');
+                        //console.log(product_id);
+                        $.ajax({
+                            url: '{{ url('/stock/product/') }}/' + product_id,
+                            type: "GET",
+                            dataType: 'json',
+                            success: function(data) {
+                                //console.log(data);
+
+                                var pcost= parent.find('.p_qty').val();
+                                parent.find('.stock_value').val(data.stock);
+                                parent.find('.remaning').val(data.stock - pcost);
+
+
+                            }
+                        });
+                        total();
+                    })
+
+            }
+
+
+        });
+
+        $(document).ready(function() {
+
+
+            $(document).on('focus', '.select2-selection.select2-selection--single', function(e) {
+                $(this).closest(".select2-container").siblings('select:enabled').select2('open');
+            });
+
+            // steal focus during close - only capture once and stop propogation
+            $('select.select2').on('select2:closing', function(e) {
+                $(e.target).data("select2").$selection.one('focus focusin', function(e) {
+                    e.stopPropagation();
+                });
+            });
+
+
+        });
+
+        $(document).ready(function() {
+
+            $('select[name="product_id"]').on('change',function() {
+                    var pro_id = $(this).val();
+                    var parent = $(this).closest('.fieldGroup');
+                    // console.log(pro_id);
+
+                    $.ajax({
+                        url : '/stock/product/'+pro_id,
+                        type:"GET",
+                        dataType: 'json',
+                        success : function(data) {
+                            // console.log('hello');
+                            // console.log(data);
+                            document.getElementById("stock").value = data.stock;
+                            },
+                        });
+                    });
+
+
+
+            $("#sbtn").click(function(event) {
+                $.ajax({
+                    url: '{{ url('sales/salesNumber') }}',
+                    type: "GET",
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.length != 0) {
+                            var dln = parseInt(data[0].invoice_no) + 1;
+                            document.getElementById("invoiceNo").innerHTML = dln;
+                        } else {
+                            document.getElementById("invoiceNo").innerHTML = 100001;
+                        }
+
+                    }
+                });
+            });
+
+        });
+
+      $(document).ready(function() {
+        $('#pField').on('input','#fg_out_qty',function(){
+				//alert('Ok');
+                // $('.totalvalueid').attr("value", "0");
+                var parent = $(this).closest('.fieldGroup');
+          		var totalKg = parent.find('#fg_out_qty').val();
+          		var weight = parent.find('.weight').val();
+				var total = totalKg/weight;
+
+   				//alert(total);
+                parent.find('#fg_qty').val(total);
+
+                });
+       });
+    </script>
+
+
+
+@endpush

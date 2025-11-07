@@ -1,0 +1,93 @@
+@extends('layouts.account_dashboard')
+
+@section('content')
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+
+        <!-- Main content -->
+        <div class="content px-4 ">
+            <div class="container-fluid">
+
+                <div class="text-center pt-3">
+                    <h5 class="text-uppercase font-weight-bold">Sister Concern Book Input</h5>
+                    <hr>
+                </div>
+
+
+                <div class="form">
+                    <form class="floating-labels m-t-40" action="{{ route('sisterConcern.book.report') }}" method="POST">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-3">
+                            </div>
+
+                            <div class="col-md-3">
+                                <h5>Select Daterange: <span id="today" style="color: lime; display:inline-block">Today</span></h5>
+                                <div class="form-group m-b-40">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="far fa-calendar-alt"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" name="date"
+                                            class="form-control float-right" id="daterangepicker">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <h5>Select Sister Concern</h5>
+                                <div class="form-group m-b-40">
+                                    <select   class="form-control  selectpicker" data-show-subtext="true"
+                                    data-live-search="true" data-actions-box="true" multiple
+                                        name="company_id[]">
+                                       @foreach ($sisterCompany as $data)
+                                            <option style="color: #FF0000" value="{{ $data->id }}">
+                                                {{ $data->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="class row">
+                            <div class="class col-md-2 m-auto px-5 mt-5">
+                                <button type="submit" class="btn btn-primary" style="width: 100%;">Generate Report</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    </div>
+
+@endsection
+
+@push('end_js')
+
+    <script>
+        $(document).ready(function() {
+
+            $("#daterangepicker").change(function() {
+                var a = document.getElementById("today");
+               a.style.display = "none";
+            });
+
+
+
+
+
+
+        });
+    </script>
+
+@endpush

@@ -1,0 +1,234 @@
+<style>
+    #pushnavbar{
+    	display:none;
+    }
+.form-control {
+    border-radius: 12px;
+    border: 1px solid #f05f5f;
+  -webkit-border: 1px solid #f05f5f;
+  -moz-border: 1px solid #f05f5f;
+}
+
+
+.hover_manu_content{
+	    position: absolute;
+    width: 100%;
+    float: left;
+    top: -390px;
+    opacity: 0;
+  background: #fff;
+   margin-left: -7px;
+
+
+}
+
+
+
+.hovermanu .fas{
+	animation-name: slide;
+    animation-duration: .4s;
+    animation-timing-function: ease-in-out;
+    animation-delay: 0s;
+  animation-iteration-count: infinite;
+  position: relative;
+}
+
+@keyframes slide {
+  0% {
+   top: -5px;
+  }
+ 
+  100% {
+    top: 0px;
+  }
+}
+
+.sales_button a,
+.sales_main_button a{
+transition: all .2s ease-in-out;
+
+}
+.sales_button a:hover,
+.sales_main_button a:hover{
+  box-shadow: 0px 2px 10px 1px;
+transform: scale(1.1);
+  
+
+}
+
+
+
+
+.main-footer{
+background: #1e2225!important;
+}
+
+.navbar-light .navbar-nav .nav-link,
+.brand-text{
+    color: #ffffff;
+}
+
+.hovermanue_icon{
+left: 50%;
+    margin: 0 auto;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+}
+
+  .custom-btn-sbms-submit{
+      background-color: #007bff;
+        color: #fff;
+      
+      }
+
+.custom-btn-sbms-add {
+        color: #fff;
+        background-color: green;
+        box-shadow: none;
+}
+.custom-btn-sbms-remove {
+    color: #ffffff;
+    background-color: red;
+     box-shadow: none;
+}
+
+
+
+.bootstrap-select>.dropdown-toggle.bs-placeholder, .bootstrap-select>.dropdown-toggle.bs-placeholder:active, .bootstrap-select>.dropdown-toggle.bs-placeholder:focus, .bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
+    color: #999;
+    border: 1px solid #f05f5f;
+    border-radius: 12px;
+}
+
+.select2-container--bootstrap4 .select2-selection--single {
+  
+    color: #495057;
+    border: 1px solid #f05f5f;
+    border-radius: 12px;
+}
+label{
+	font-size: 18px;
+}
+label:not(.form-check-label):not(.custom-file-label) {
+    font-weight: 700;
+    font-size: 13px;
+  	color: #007bff;
+}
+.table-header-fixt-top{
+    font-size: 16px;
+    font-weight: bold;
+    color: rgb(255 255 255) !important;
+    top: -25px;
+    background: #FA621C !important;
+}
+
+
+/* For Navbar Color */
+
+.navbar-white{
+  background: #343A40 !important;
+  color: #ffffff !important;
+}
+.navbar-white.darkmood{
+  background: #343A40 !important;
+  color: #ffffff !important;
+}
+.navbar-white.defaultmood{
+  background: #003b46 !important;
+  color: #ffffff !important;
+}
+
+
+/* For Hover manu Color */
+
+
+.hover_manu_content.darkmood{
+  background: #343A40 !important;
+  color: #ffffff !important;
+}
+.hover_manu_content.defaultmood{
+  background: #003b46 !important;
+  color: #ffffff !important;
+}
+
+/* For Content Background Color */
+
+.content-wrapper .content{
+ 
+}
+.content-wrapper .content.darkmood{
+  background: #1e2225 !important;
+}
+.content-wrapper .content.defaultmood{
+ background: #00292e !important;
+  
+}
+
+
+/* For container Background Color */
+
+.content-wrapper .container.darkmood,
+.content-wrapper .container-fluid.darkmood{
+  background: rgb(35 40 45) !important;
+  color: #fff;
+}
+.content-wrapper .container.defaultmood,
+.content-wrapper .container-fluid.defaultmood{
+   background: #07575b !important;
+  color: #fff;
+}
+.content-wrapper .container.darkmood .table,
+.content-wrapper .container-fluid.darkmood .table {
+    background: #343a40 !important;
+    color: #fff !important;
+}
+
+/*Light Mood table header*/
+.content-wrapper .container .table .table-header-fixt-top, 
+.content-wrapper .container-fluid .table .table-header-fixt-top,
+.content-wrapper .container .table thead, 
+.content-wrapper .container-fluid .table thead,
+.content-wrapper .container .table thead tr, 
+.content-wrapper .container-fluid .table thead tr{
+    background: #FA621C !important;
+    color: #fff !important;
+}
+
+.container.darkmood .hover_manu_content{
+	 background: #131516 !important;
+}
+
+/*Dark Mood table header*/
+.content-wrapper .container.darkmood .table .table-header-fixt-top, 
+.content-wrapper .container-fluid.darkmood .table .table-header-fixt-top,
+.content-wrapper .container.darkmood .table thead, 
+.content-wrapper .container-fluid.darkmood .table thead,
+.content-wrapper .container.darkmood .table thead tr, 
+.content-wrapper .container-fluid.darkmood .table thead tr{
+    background: #000 !important;
+    color: #fff !important;
+}
+table {
+  	font-family: 'Font Awesome 5 Free'!important;
+  	font-weight: 600 !important;
+}
+
+h5{
+  font-family: 'Font Awesome 5 Free'!important;
+}
+h3{
+  font-family: 'Font Awesome 5 Free'!important;
+}
+h6{
+  font-family: 'Font Awesome 5 Free'!important;
+}
+p{
+  font-family: 'Font Awesome 5 Free'!important;
+}
+
+
+
+
+
+  </style>

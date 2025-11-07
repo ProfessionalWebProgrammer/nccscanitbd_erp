@@ -1,0 +1,83 @@
+Additional Css
+
+
+
+
+.sidebar .nav-item {
+
+    border-bottom: 1px solid rgba(201, 201, 201, 0.452);
+}
+
+.sidebar .nav-treeview .nav-item {
+    padding-left: 15px;
+}
+
+
+.sidebar-mini .main-sidebar .nav-link, .sidebar-mini-md .main-sidebar .nav-link, .sidebar-mini-xs .main-sidebar .nav-link {
+    width: auto !important;
+}
+
+.posclass .form-control:focus {
+    background-color: #a8ffa8;
+    border-color: #ff1212;
+    border-width: 2px;
+}
+
+.custom-btn-sbms-add:focus {
+    border-color: #980000;
+
+}
+
+.custom-btn-sbms-remove:focus {
+    border-color: #bfff49;
+
+}
+
+.custom-btn-sbms-submit:focus {
+    border-color: #d65b09;
+
+}
+
+.custom-btn-sbms-submit:hover,
+.custom-btn-sbms-submit:focus{
+    background: #e22030;
+    color: bisque;
+    border-color: #e22030;
+
+}
+
+.fieldGroup .custom-btn-sbms-remove{
+    display: none;
+}
+.fieldGroup:hover .custom-btn-sbms-remove{
+    display: inline-block;
+}
+
+table.table-bordered{
+    background-color: white;
+    color: black !important;
+}
+.table,
+.table td{
+   border-color: rgb(150, 150, 150);
+}
+.content .small-box{
+box-shadow: 0 0 10px rgb(0 0 0 / 18%), 0 0px 10px rgb(0 0 0 / 77%);
+}
+
+.content .small-box .small-box-footer{
+font-size: 20px;
+}
+
+.mainmanu{
+  font-size: 18px;
+color: #fff !important;
+
+}
+.mainmanu:hover{
+      background-color: #282828 !important;
+    border-color: #ecefea !important;
+  transition: all .5s;
+
+
+}

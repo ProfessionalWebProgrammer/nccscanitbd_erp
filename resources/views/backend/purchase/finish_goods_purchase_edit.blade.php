@@ -1,0 +1,313 @@
+@extends('layouts.purchase_deshboard')
+
+@section('content')
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+
+        <!-- Main content -->
+        <div class="content px-4 ">
+
+            <form class="floating-labels m-t-40" action="{{ Route('finish.goods.manual.purchse.update') }}" method="POST">
+                @csrf
+
+                <div class="container" style="background:#ffffff; padding:0px 40px;min-height:85vh">
+                    <div class="text-center py-4">
+                        <h3 class="text-uppercase font-weight-bold">Finish Goods Purchase Edit</h3> <hr>
+                    </div>
+                    <div class="row">
+                      
+                        <div class="col-md-12">
+                          	<div class="row">
+                              <div class="col-md-4">
+                                <label class="col-form-label text-right">Date :</label>
+                                <input type="date" id="data" name="date" value="{{$purchase->date}}" class="form-control">
+                                <input type="hidden" id="data" name="id" value="{{$purchase->id}}" class="form-control">
+                              </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="col-form-label text-right" style="padding-top: 10px;"> Supplier Name</label>
+                            <select class="form-control select2" name="raw_supplier_id" id="supplier_id" required>
+                                <option value="">Select Supplier</option>
+                                @foreach ($suppliers as $supplier)
+                                    <option style="color:#000;font-weight:600;" value="{{ $supplier->id }}" @if($purchase->supplier_id == $supplier->id) selected @endif>
+                                        {{ $supplier->supplier_name }}</option>
+                                @endforeach 
+                            </select>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <label style="padding-top: 10px;"> Warehouse Name:</label>
+                            <select class="form-control select2" name="wirehouse_id" id="wirehouse" required>
+                                <option value="">Select Warehouse</option>
+                                @foreach ($factoryes as $factorye)
+                                    <option style="color:#000;font-weight:600;" value="{{ $factorye->id }}" @if($purchase->warehouse_id == $factorye->id) selected @endif>
+                                        {{ $factorye->factory_name }}</option>
+                                @endforeach 
+                            </select>
+                        </div>
+                       <div class="col-md-4">
+                            <label class="col-form-label text-right">Transport Vehicle: </label>
+                            <input type="Text" id="vehicle" name="transport_vehicle" class="form-control" value="{{$purchase->transport_vehicle}}" placeholder="Transport Vehicle">
+
+                        </div>
+                      
+                    </div>
+
+                     {{-- Multiple add button code start from here! --}}
+                     <div class="row mt-5">
+                        <div id="field" class="col-md-12">
+                          <div class="row fieldGroup rowname">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label>Product Name</label>
+                                                </div>
+                                              	<div class="col-md-2">
+                                                    <label for="">Unit :</label>
+                                                </div>
+                                               
+                                                <div class="col-md-2">
+                                                    <label for="">Quantity :</label>
+                                                </div>
+
+                                                <div class="col-md-2">
+                                                    <label for="">Purchase Price :</label>
+                                                </div>
+                                                
+                                                <div class="col-md-2">
+                                                    <label for="">Total  value:</label>
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label for="">Action :</label>                                        
+                                        </div>
+                                        <div class="col-md-2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                          
+                          @foreach($purchaseitems as $items)
+                            <div class="row fieldGroup rowname mt-3">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control select2" name="product_id[]" required>
+                                                        <option value="">Select Product</option>
+                                                        @foreach ($products as $data)
+                                                            <option style="color:#000;font-weight:600;" value="{{ $data->id }}" @if($items->product_id == $data->id) selected @endif>
+                                                                {{ $data->product_name }}</option>
+                                                        @endforeach 
+                                                    </select>
+                                                </div>
+                                              	<div class="col-md-2">
+                                                    <select class="form-control select2" name="unit_id[]" required>
+                                                        <option value="">Select Unit</option>
+                                                        @foreach ($units as $unit)
+                                                            <option style="color:#000;font-weight:600;" value="{{ $unit->id }}"  @if($items->unit_id == $unit->id) selected @endif>
+                                                                {{ $unit->unit_name }} ({{ $unit->unit_pcs }} Pcs)</option>
+                                                        @endforeach 
+                                                    </select>
+                                                </div>
+                                               
+                                                <div class="col-md-2">
+                                                    <input type="text" class="form-control p_qty" name="p_qty[]" value="{{ $items->quantity }}">
+                                                </div>
+
+                                                <div class="col-md-2">
+                                                    <input type="text" class="form-control p_price" name="p_price[]" value="{{ $items->rate }}">
+                                                </div>
+                                                
+                                                <div class="col-md-2">
+                                                    <input type="hidden" readonly class="form-control total_price"   name="total_price[]" placeholder="total">
+                                                    <input type="text" class="form-control total_price_without_discount" disabled  value="{{$items->total_value}}" name="total_price_without_discount[]">
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <a href="javascript:void(0)" style="margin-top: 3px;"
+                                                class="btn custom-btn-sbms-add btn-sm addMore"><i
+                                                    class="fas fa-plus-circle"></i></a>
+                                            <a href="javascript:void(0)"  class="btn btn-sm custom-btn-sbms-remove remove"
+                                                style="margin-top: 3px;"><i class="fas  fa-minus-circle"></i></a>
+                                        
+                                        </div>
+                                        <div class="col-md-2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                       @endforeach
+                        </div>
+                    </div>
+                    {{-- multiple add end on here --}}
+                        
+                       
+                         <div class="row mt-3">
+                            <div class="col-md-2"></div>
+                           
+                           <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="col-form-label ">Total Purchase Amount:</label>
+                                    <input type="number" step="any" class="form-control" value="{{$purchase->total_purchase_amount}}" id="total_purchase_value"
+                                        name="total_purchase_value" readonly placeholder="">
+                                       
+                                </div>
+                            </div>
+                           
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="col-form-label ">Transport Fare:</label>
+                                    <input type="number" step="any" class="form-control " value="{{$purchase->transport_fare}}" id="transport_fare" name="transport_fare"
+                                        placeholder="Transport Fare">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="col-form-label ">Net Payable Amount:</label>
+                                    <input type="number" step="any" class="form-control" id="total_payable_amount" value="{{$purchase->net_payable_amount}}"
+                                        name="total_payable_amount" readonly placeholder="Net Payable Amount">
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    <div class="row pb-5 pt-3">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn btn-success"><i class="fas fa-dolly"></i> Purchase</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </form>
+        </div>
+        <!-- /.content -->
+
+
+    </div>
+    <!-- /.content-wrapper -->
+
+@endsection
+
+
+@push('end_js')
+
+
+
+    <script>
+        $(document).ready(function() {
+            //add more fields group
+            $("body").on("click", ".addMore", function() {
+                var fieldHTML =
+                    '<div class="row fieldGroup rowname mt-3"> <div class="col-md-12"> <div class="row"> <div class="col-md-11"> <div class="row"> <div class="col-md-4"> <select class="form-control select2" name="product_id[]" required> <option value="">Select Product</option> @foreach ($products as $data) <option style="color:#000;font-weight:600;" value="{{$data->id}}">{{$data->product_name}}</option> @endforeach </select> </div><div class="col-md-2"> <select class="form-control select2" name="unit_id[]" required> <option value="">Select Unit</option> @foreach ($units as $unit) <option style="color:#000;font-weight:600;" value="{{$unit->id}}">{{$unit->unit_name}}({{$unit->unit_pcs}}Pcs)</option> @endforeach </select> </div><div class="col-md-2"> <input type="text" class="form-control p_qty" name="p_qty[]" placeholder="Quantity"> </div><div class="col-md-2"> <input type="text" class="form-control p_price" name="p_price[]" placeholder="Price"> </div><div class="col-md-2"> <input type="hidden" readonly class="form-control total_price" name="total_price[]" placeholder="total"> <input type="text" class="form-control total_price_without_discount" disabled name="total_price_without_discount[]"> </div></div></div><div class="col-md-1"> <a href="javascript:void(0)" style="margin-top: 3px;" class="btn custom-btn-sbms-add btn-sm addMore"><i class="fas fa-plus-circle"></i></a> <a href="javascript:void(0)" class="btn btn-sm custom-btn-sbms-remove remove" style="margin-top: 3px;"><i class="fas fa-minus-circle"></i></a> </div><div class="col-md-2"></div></div></div></div>';
+                $(this).parents('.fieldGroup:last').after(fieldHTML);
+
+                $('.select2').select2({
+                    theme: 'bootstrap4'
+                    })
+            });
+            //remove fields group
+            $("body").on("click", ".remove", function() {
+                $(this).parents(".fieldGroup").remove();
+                total();
+            });
+
+
+
+            $('#field').on('input','.p_price, .p_qty',function(){
+
+                var parent = $(this).closest('.fieldGroup');
+                var product_price=parent.find('.p_price').val();
+
+                var product_qty=parent.find('.p_qty').val();
+
+                var total_price = product_price*product_qty;
+
+
+
+
+                parent.find('.total_price_without_discount').val(total_price);
+                parent.find('.total_price').val(total_price);
+
+
+                total();
+
+
+                });
+
+
+                function total(){
+               var total = 0;
+                var discount = 0;
+                var total_with_discount = 0;
+
+
+
+                $(".total_price").each(function(){
+                    var totalvalueid = $(this).val()-0;
+                    total +=totalvalueid;
+                    $('#total_payable_amount').val(total);
+                    // console.log(total);
+                })
+
+                var tv = $('#transport_fare').val();
+                 $('#total_payable_amount').val(total-tv);
+                 $('#total_purchase_value').val(total);
+       
+             
+            }
+
+
+            $('#transport_fare').on('input',function(){
+               var tf =  $(this).val();
+
+                var tv = $('#total_purchase_value').val();
+
+                var tnv = tv -tf;
+
+                $('#total_payable_amount').val(tnv);
+           
+                  
+
+                    });
+
+
+
+
+        });
+
+
+        $(document).ready(function() {
+
+   
+$(document).on('focus', '.select2-selection.select2-selection--single', function (e) {
+    $(this).closest(".select2-container").siblings('select:enabled').select2('open');
+    });
+
+    // steal focus during close - only capture once and stop propogation
+    $('select.select2').on('select2:closing', function (e) {
+    $(e.target).data("select2").$selection.one('focus focusin', function (e) {
+        e.stopPropagation();
+        });
+    });
+
+    
+});
+
+
+
+      
+       
+    </script>
+
+@endpush
